@@ -1,0 +1,33 @@
+:root {
+  color-scheme: dark;
+  --surface: #050505;
+  --border: #1a1a1a;
+  --text: #f4f4f4;
+  --muted: #8d8d8d;
+  --font-body: 'SF Pro Display', 'SF Pro Text', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #000;
+  color: var(--text);
+  font-family: var(--font-body);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}

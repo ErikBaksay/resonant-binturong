@@ -1,0 +1,73 @@
+@use '../../../../styles/primitives' as p;
+
+.overlay {
+  @include p.overlay-backdrop(42);
+}
+
+.overlay-card {
+  @include p.overlay-card(640px);
+}
+
+.kicker {
+  margin: 0;
+  color: var(--ink-faint);
+  font-size: 0.71rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.65rem, 2.8vw, 2.2rem);
+  font-weight: 500;
+  color: var(--ink-on-rail);
+}
+
+.subtle {
+  margin: 0;
+  color: var(--ink-faint);
+}
+
+.quote-box {
+  @include p.control-base(var(--line-shell-soft), 0.95rem);
+  background: var(--surface-shell-2);
+  padding: 0.82rem;
+}
+
+.quote-box p {
+  margin: 0;
+  color: var(--ink-on-rail);
+  line-height: 1.65;
+  white-space: pre-line;
+}
+
+.overlay-meta {
+  @include p.control-base(var(--line-shell-soft), 0.95rem);
+  background: var(--surface-shell-2);
+  display: flex;
+  justify-content: space-between;
+  gap: 0.6rem;
+  padding: 0.72rem;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.72rem;
+}
+
+.button-primary {
+  @include p.button-shell-primary;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.full-width {
+  width: 100%;
+}
+
+@media (max-width: 700px) {
+  .overlay-meta {
+    flex-direction: column;
+  }
+}

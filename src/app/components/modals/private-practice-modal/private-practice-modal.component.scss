@@ -1,0 +1,89 @@
+@use '../../../../styles/primitives' as p;
+
+.overlay {
+  @include p.overlay-backdrop(40);
+}
+
+.overlay-card {
+  @include p.overlay-card(640px);
+}
+
+.kicker {
+  margin: 0;
+  color: var(--ink-faint);
+  font-size: 0.71rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.65rem, 2.8vw, 2.2rem);
+  font-weight: 500;
+  color: var(--ink-on-rail);
+}
+
+.subtle {
+  margin: 0;
+  color: var(--ink-faint);
+}
+
+.form-stack {
+  display: grid;
+  gap: 0.74rem;
+}
+
+label {
+  display: grid;
+  gap: 0.38rem;
+
+  span {
+    color: var(--ink-faint);
+    font-size: 0.79rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+}
+
+input,
+textarea {
+  @include p.shell-field;
+  width: 100%;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.62rem;
+}
+
+.button-primary {
+  @include p.button-shell-primary;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.button-ghost {
+  @include p.button-shell;
+  background: transparent;
+  color: var(--ink-faint);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.full-width {
+  width: 100%;
+}
+
+@media (max-width: 700px) {
+  .actions {
+    grid-template-columns: 1fr;
+  }
+}

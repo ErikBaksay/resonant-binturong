@@ -1,0 +1,95 @@
+<section class="stats-layout">
+  <section class="panel-card panel-span">
+    <div class="section-head">
+      <div>
+        <h2>Stats</h2>
+        <p class="subtle">A simple view of your practice and backup data.</p>
+      </div>
+    </div>
+
+    <div class="stats-card-grid">
+      <article class="stat-card">
+        <span class="label">Completed sessions</span>
+        <strong class="stat-value">{{ stats().completedSessions }}</strong>
+      </article>
+
+      <article class="stat-card">
+        <span class="label">Repetitions written</span>
+        <strong class="stat-value">{{ stats().repetitionsWritten }}</strong>
+      </article>
+
+      <article class="stat-card">
+        <span class="label">Current streak</span>
+        <strong class="stat-value">{{ stats().currentStreak }}</strong>
+        <p class="stat-caption">Consecutive days with at least one completion.</p>
+      </article>
+
+      <article class="stat-card">
+        <span class="label">Last completed</span>
+        <strong class="stat-value">{{ formatCompletedDate()(stats().lastCompletedOn) }}</strong>
+      </article>
+
+      <article class="stat-card">
+        <span class="label">Statements saved</span>
+        <strong class="stat-value">{{ stats().statementCount }}</strong>
+      </article>
+
+      <article class="stat-card">
+        <span class="label">Categories saved</span>
+        <strong class="stat-value">{{ categoriesCount() }}</strong>
+      </article>
+
+      <article class="stat-card">
+        <span class="label">Due now</span>
+        <strong class="stat-value">{{ stats().dueNowCount }}</strong>
+      </article>
+    </div>
+  </section>
+
+  <section class="panel-card">
+    <div class="section-head">
+      <h2>Data</h2>
+    </div>
+
+    <p class="subtle">
+      Export or import your categories, statements, reminder schedules, and lightweight stats.
+    </p>
+
+    <input #importInput class="hidden-input" type="file" accept="application/json,.json" (change)="importData.emit($event)" />
+
+    <div class="actions">
+      <button type="button" class="button-primary" (click)="exportData.emit()">Export JSON</button>
+      <button type="button" class="button-ghost" (click)="importInput.click()">Import JSON</button>
+    </div>
+  </section>
+
+  <section class="panel-card">
+    <div class="section-head">
+      <h2>Reminders</h2>
+      @if (stats().dueNowCount) {
+        <span class="pill">{{ stats().dueNowCount }} due</span>
+      }
+    </div>
+
+    <p class="subtle">{{ notificationCopy() }}</p>
+
+    @if (notificationStatus() !== 'unsupported' && (!notificationsEnabled() || notificationStatus() !== 'granted')) {
+      <button type="button" class="button-ghost" (click)="enableNotifications.emit()">Enable notifications</button>
+    }
+
+    <div class="simple-list">
+      @if (dueOccurrences().length) {
+        @for (reminder of dueOccurrences(); track reminder.key) {
+          <article class="simple-item">
+            <div>
+              <strong>{{ reminder.title }}</strong>
+              <p>{{ reminder.label }} · {{ formatRelativeReminder()(reminder) }}</p>
+            </div>
+          </article>
+        }
+      } @else {
+        <p class="empty-text">No reminders due right now.</p>
+      }
+    </div>
+  </section>
+</section>

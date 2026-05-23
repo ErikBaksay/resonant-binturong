@@ -1,0 +1,151 @@
+@use '../../../styles/primitives' as p;
+
+.stats-layout {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.86rem;
+}
+
+.panel-span {
+  grid-column: 1 / -1;
+}
+
+.panel-card {
+  @include p.stage-panel;
+  padding: 0.88rem;
+  display: grid;
+  gap: 0.75rem;
+  color: var(--ink-stage-2);
+}
+
+.section-head,
+.simple-item,
+.actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.section-head,
+.simple-item {
+  align-items: center;
+  justify-content: space-between;
+}
+
+.section-head h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--ink-stage-1);
+}
+
+.subtle,
+.simple-item p,
+.empty-text,
+.stat-caption {
+  margin: 0;
+  color: var(--ink-stage-faint);
+}
+
+.stats-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.72rem;
+}
+
+.stat-card {
+  @include p.control-base(var(--line-stage-soft), 1rem);
+  background: color-mix(in oklab, var(--surface-stage-1) 72%, #fff8ef);
+  padding: 0.9rem;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.label {
+  margin: 0;
+  color: var(--ink-stage-faint);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.stat-value {
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--ink-stage-1);
+}
+
+.stat-caption {
+  line-height: 1.45;
+}
+
+.button-primary {
+  @include p.button-shell-primary;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.button-ghost {
+  @include p.button-stage;
+  background: color-mix(in oklab, var(--surface-stage-0) 94%, #fff);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.pill {
+  @include p.control-base(var(--line-stage-soft), 999px);
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.32rem 0.7rem;
+  background: color-mix(in oklab, var(--oxide-soft) 18%, var(--surface-stage-0));
+  color: var(--ink-stage-1);
+  font-weight: 660;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.simple-list {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.simple-item {
+  @include p.control-base(var(--line-stage-soft), 0.95rem);
+  background: color-mix(in oklab, var(--surface-stage-1) 72%, #fff8ef);
+  padding: 0.76rem;
+}
+
+.simple-item strong {
+  color: var(--ink-stage-1);
+}
+
+.hidden-input {
+  display: none;
+}
+
+.actions {
+  flex-wrap: wrap;
+}
+
+@media (max-width: 960px) {
+  .stats-layout,
+  .stats-card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .section-head,
+  .simple-item,
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

@@ -1,0 +1,64 @@
+<section class="overlay" role="dialog" aria-modal="true" aria-label="Focus session">
+  <div class="overlay-card">
+    <p class="kicker">Focus session</p>
+    <h2>{{ statement().title }}</h2>
+    <p class="subtle">
+      Write the statement exactly {{ activeSession().targetRepetitions }} times.
+      @if (activeSession().mode === 'manual') {
+        This manual session can be dismissed anytime.
+      } @else {
+        This scheduled session stays open until completed.
+      }
+    </p>
+
+    <div class="quote-box">
+      <p>{{ statement().text }}</p>
+    </div>
+
+    <div class="progress-grid">
+      <div>
+        <span class="label">Progress</span>
+        <strong>{{ activeSession().completedRepetitions }}/{{ activeSession().targetRepetitions }}</strong>
+      </div>
+      <div>
+        <span class="label">Remaining</span>
+        <strong>{{ activeSession().targetRepetitions - activeSession().completedRepetitions }}</strong>
+      </div>
+      <div>
+        <span class="label">Mode</span>
+        <strong>{{ activeSession().mode === 'scheduled' ? 'Scheduled' : 'Manual' }}</strong>
+      </div>
+    </div>
+
+    <form class="form-stack" (ngSubmit)="submit.emit()">
+      <label>
+        <span>Write the statement</span>
+        <textarea
+          name="active-entry"
+          [ngModel]="activeSession().currentEntry"
+          (ngModelChange)="updateEntry.emit($event)"
+          rows="4"
+          placeholder="Type the line here"
+          required
+        ></textarea>
+      </label>
+
+      <p class="subtle">
+        Case, punctuation, extra spaces, and a small number of typos are allowed. If you pause after typing a matching entry,
+        it counts automatically.
+      </p>
+
+      @if (feedback()) {
+        <p class="feedback">{{ feedback() }}</p>
+      }
+
+      <div class="actions">
+        <button type="submit" class="button-primary full-width">Count repetition</button>
+        <button type="button" class="button-ghost full-width" (click)="restart.emit()">Restart</button>
+        @if (activeSession().mode === 'manual') {
+          <button type="button" class="button-ghost full-width" (click)="dismiss.emit()">Dismiss session</button>
+        }
+      </div>
+    </form>
+  </div>
+</section>

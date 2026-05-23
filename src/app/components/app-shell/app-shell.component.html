@@ -1,0 +1,46 @@
+<div class="app-root">
+  <header class="top-strip">
+    <div class="brand-block">
+      <p class="eyebrow">Resonant Binturong</p>
+      <h1>Mind programming</h1>
+      <p class="subtitle">{{ subtitle() }}</p>
+    </div>
+
+    <div class="strip-actions">
+      <button type="button" class="hero-action" (click)="openPrivatePractice.emit()">Private practice</button>
+
+      <div class="view-switch" role="tablist" aria-label="View selector">
+        <button
+          type="button"
+          class="switch"
+          [class.active]="activeView() === 'library'"
+          (click)="switchView.emit('library')"
+        >
+          Library
+        </button>
+        <button type="button" class="switch" [class.active]="activeView() === 'stats'" (click)="switchView.emit('stats')">
+          Stats
+        </button>
+        <button
+          type="button"
+          class="switch"
+          [class.active]="activeView() === 'manage'"
+          (click)="switchView.emit('manage')"
+        >
+          Manage
+        </button>
+      </div>
+    </div>
+  </header>
+
+  @if (completionBanner()) {
+    <section class="notice" role="status">
+      <p>{{ completionBanner() }}</p>
+      <button type="button" (click)="clearBanner.emit()">Clear</button>
+    </section>
+  }
+
+  <main class="workspace">
+    <ng-content />
+  </main>
+</div>

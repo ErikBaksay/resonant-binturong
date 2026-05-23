@@ -1,0 +1,76 @@
+<section class="library-layout">
+  <aside class="rail-pane">
+    <div class="rail-head">
+      <h2>Categories</h2>
+      <p>{{ totalStatements() }} statements</p>
+    </div>
+
+    <div class="category-list">
+      <button
+        type="button"
+        class="category-item"
+        [class.active]="selectedCategoryId() === 'all'"
+        (click)="selectCategory.emit('all')"
+      >
+        <span>All categories</span>
+        <small>{{ totalStatements() }} statements</small>
+      </button>
+
+      @for (category of categories(); track category.id) {
+        <button
+          type="button"
+          class="category-item"
+          [class.active]="selectedCategoryId() === category.id"
+          (click)="selectCategory.emit(category.id)"
+        >
+          <span>{{ category.name }}</span>
+          <small>{{ category.description || 'No description' }}</small>
+        </button>
+      }
+    </div>
+  </aside>
+
+  <section class="stage-pane">
+    <div class="section-head">
+      <div>
+        <h2>{{ selectedCategoryLabel() }}</h2>
+        <p class="subtle">
+          {{ filteredStatements().length }} statement{{ filteredStatements().length === 1 ? '' : 's' }}
+        </p>
+      </div>
+
+      @if (dueCount()) {
+        <span class="pill">{{ dueCount() }} due</span>
+      }
+    </div>
+
+    @if (filteredStatements().length) {
+      <div class="statement-list">
+        @for (statement of filteredStatements(); track statement.id) {
+          <article class="statement-item">
+            <div class="statement-head">
+              <div>
+                <h3>{{ statement.title }}</h3>
+                <p class="statement-category">{{ categoryName()(statement) }}</p>
+              </div>
+
+              @if (dueByStatement().get(statement.id)) {
+                <span class="pill">{{ dueByStatement().get(statement.id) }} due</span>
+              }
+            </div>
+
+            <p class="statement-body">{{ statement.text }}</p>
+            <p class="statement-meta">{{ statementSummary()(statement) }}</p>
+
+            <div class="actions">
+              <button type="button" class="button-primary" (click)="startStatement.emit(statement)">Start</button>
+              <button type="button" class="button-ghost" (click)="startCustomStatement.emit(statement)">Custom count</button>
+            </div>
+          </article>
+        }
+      </div>
+    } @else {
+      <p class="empty-text">No statements here yet.</p>
+    }
+  </section>
+</section>

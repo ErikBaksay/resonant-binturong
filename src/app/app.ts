@@ -1,5 +1,13 @@
 import { Component, computed, effect, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ActiveSessionModalComponent } from './components/modals/active-session-modal/active-session-modal.component';
+import { PrivatePracticeModalComponent } from './components/modals/private-practice-modal/private-practice-modal.component';
+import { PrivateSessionModalComponent } from './components/modals/private-session-modal/private-session-modal.component';
+import { ReminderModalComponent } from './components/modals/reminder-modal/reminder-modal.component';
+import { AppShellComponent } from './components/app-shell/app-shell.component';
+import { LibraryViewComponent } from './components/library-view/library-view.component';
+import { ManageViewComponent } from './components/manage-view/manage-view.component';
+import { StatsViewComponent } from './components/stats-view/stats-view.component';
 import { DueOccurrence, Statement } from './models/mind-programming.models';
 import {
   DEFAULT_REPETITIONS,
@@ -44,7 +52,17 @@ interface PrivateSessionState {
 
 @Component({
   selector: 'app-root',
-  imports: [FormsModule],
+  imports: [
+    FormsModule,
+    AppShellComponent,
+    LibraryViewComponent,
+    ManageViewComponent,
+    StatsViewComponent,
+    PrivatePracticeModalComponent,
+    PrivateSessionModalComponent,
+    ReminderModalComponent,
+    ActiveSessionModalComponent,
+  ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
@@ -190,6 +208,18 @@ export class App {
     return this.selectedCategory()?.name ?? 'All categories';
   }
 
+  protected get shellSubtitle(): string {
+    const stats = this.store.stats();
+    const reminderCopy =
+      stats.dueNowCount === 1 ? '1 reminder due' : `${stats.dueNowCount} reminders due`;
+    const sessionCopy =
+      stats.completedSessions === 1
+        ? '1 session completed'
+        : `${stats.completedSessions} sessions completed`;
+
+    return `${reminderCopy} · ${sessionCopy}`;
+  }
+
   protected createCategoryForm(): CategoryFormModel {
     return {
       name: '',
@@ -227,6 +257,10 @@ export class App {
 
   protected openStats(): void {
     this.activeView.set('stats');
+  }
+
+  protected switchView(view: 'library' | 'manage' | 'stats'): void {
+    this.activeView.set(view);
   }
 
   protected openPrivatePractice(): void {

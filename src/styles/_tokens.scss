@@ -1,0 +1,47 @@
+:root {
+  --font-display: 'Fraunces Variable', 'Iowan Old Style', 'Times New Roman', serif;
+  --font-body: 'Manrope Variable', 'Avenir Next', 'Segoe UI', sans-serif;
+
+  --noir-0: #070606;
+  --noir-1: #0e0c0c;
+  --noir-2: #171312;
+  --noir-3: #221b19;
+
+  --bone-0: #f6efe3;
+  --bone-1: #f1e8d9;
+  --bone-2: #e5d8c3;
+
+  --oxide-soft: #d28c5f;
+  --oxide-warm: #bf7747;
+  --oxide-strong: #9a5834;
+
+  --ink-shell: #eee4d3;
+  --ink-on-rail: #f4ecdf;
+  --ink-faint: #b8a892;
+
+  --ink-stage-1: #1d1815;
+  --ink-stage-2: #382e27;
+  --ink-stage-faint: #55483b;
+
+  --surface-shell-1: color-mix(in oklab, var(--noir-2) 84%, var(--noir-0));
+  --surface-shell-2: color-mix(in oklab, var(--noir-3) 78%, var(--noir-1));
+  --surface-rail: color-mix(in oklab, var(--surface-shell-1) 88%, #0a0808);
+
+  --surface-stage-0: color-mix(in oklab, var(--bone-0) 90%, #fff8ef);
+  --surface-stage-1: color-mix(in oklab, var(--bone-1) 88%, #fff8ef);
+
+  --line-shell-soft: color-mix(in oklab, #705546 44%, #221a17);
+  --line-shell-strong: color-mix(in oklab, #8e6b54 58%, #201714);
+  --line-stage-soft: color-mix(in oklab, #b69c82 42%, #f8f0e2);
+  --line-stage-strong: color-mix(in oklab, #927a61 58%, #f8f0e2);
+
+  --shadow-shell-1:
+    0 22px 48px -36px color-mix(in oklab, #050404 88%, transparent),
+    inset 0 1px 0 color-mix(in oklab, #5f4d41 24%, transparent);
+  --shadow-shell-2:
+    0 30px 64px -34px color-mix(in oklab, #030202 94%, transparent),
+    inset 0 1px 0 color-mix(in oklab, #6e5a4d 28%, transparent);
+  --shadow-stage-1:
+    0 24px 52px -38px color-mix(in oklab, #090706 44%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.86);
+}

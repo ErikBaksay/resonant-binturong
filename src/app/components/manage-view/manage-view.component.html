@@ -1,0 +1,175 @@
+<section class="manage-layout">
+  <section class="panel-card">
+    <div class="section-head">
+      <h2>Categories</h2>
+    </div>
+
+    <div class="simple-list">
+      @for (category of categories(); track category.id) {
+        <article class="simple-item">
+          <div>
+            <strong>{{ category.name }}</strong>
+            <p>{{ category.description || 'No description' }}</p>
+          </div>
+
+          <div class="actions">
+            <button type="button" class="button-ghost danger" (click)="deleteCategory.emit(category)">Delete</button>
+          </div>
+        </article>
+      }
+    </div>
+
+    <form class="form-stack" (ngSubmit)="addCategory.emit()">
+      <label>
+        <span>Name</span>
+        <input name="category-name" [(ngModel)]="categoryForm().name" placeholder="Morning" required />
+      </label>
+
+      <label>
+        <span>Description</span>
+        <textarea
+          name="category-description"
+          [(ngModel)]="categoryForm().description"
+          rows="2"
+          placeholder="Optional"
+        ></textarea>
+      </label>
+
+      <button type="submit" class="button-primary">Add category</button>
+    </form>
+  </section>
+
+  <section class="panel-card">
+    <div class="section-head">
+      <h2>{{ isEditingStatement() ? 'Edit statement' : 'New statement' }}</h2>
+      @if (isEditingStatement()) {
+        <button type="button" class="button-ghost" (click)="cancelStatementEdit.emit()">Cancel</button>
+      }
+    </div>
+
+    <form class="form-stack" (ngSubmit)="saveStatement.emit()">
+      <div class="split-grid">
+        <label>
+          <span>Category</span>
+          <select name="statement-category" [(ngModel)]="statementForm().categoryId" required>
+            @for (category of categories(); track category.id) {
+              <option [value]="category.id">{{ category.name }}</option>
+            }
+          </select>
+        </label>
+
+        <label>
+          <span>Default repetitions</span>
+          <input
+            name="statement-default-repetitions"
+            type="number"
+            min="1"
+            max="108"
+            [(ngModel)]="statementForm().defaultRepetitions"
+            required
+          />
+        </label>
+      </div>
+
+      <label>
+        <span>Title</span>
+        <input name="statement-title" [(ngModel)]="statementForm().title" placeholder="Focused calm" required />
+      </label>
+
+      <label>
+        <span>Statement</span>
+        <textarea
+          name="statement-text"
+          [(ngModel)]="statementForm().text"
+          rows="4"
+          placeholder="Write the exact line you want to repeat."
+          required
+        ></textarea>
+      </label>
+
+      <div class="toggle-row">
+        <div>
+          <strong>Scheduled reminder</strong>
+          <p class="subtle">Turn on reminders for this statement.</p>
+        </div>
+
+        <label class="switch">
+          <input
+            type="checkbox"
+            name="schedule-enabled"
+            [ngModel]="statementForm().scheduleEnabled"
+            (ngModelChange)="setScheduleEnabled.emit($event)"
+          />
+          <span></span>
+        </label>
+      </div>
+
+      @if (statementForm().scheduleEnabled) {
+        <div class="schedule-block">
+          <div class="day-row">
+            @for (day of dayOptions(); track day.value) {
+              <label class="day-chip">
+                <input
+                  type="checkbox"
+                  [name]="'weekday-' + day.value"
+                  [checked]="statementForm().scheduleDays.includes(day.value)"
+                  (change)="toggleScheduleDay.emit({ day: day.value, checked: $any($event.target).checked })"
+                />
+                <span>{{ day.label }}</span>
+              </label>
+            }
+          </div>
+
+          <div class="form-stack compact">
+            @for (time of statementForm().scheduleTimes; track $index) {
+              <div class="time-row">
+                <input
+                  type="time"
+                  [name]="'schedule-time-' + $index"
+                  [ngModel]="time"
+                  (ngModelChange)="updateScheduleTime.emit({ index: $index, value: $event })"
+                />
+
+                <button type="button" class="button-ghost" (click)="removeScheduleTime.emit($index)">Remove</button>
+              </div>
+            }
+
+            <button type="button" class="button-ghost" (click)="addScheduleTime.emit()">Add time</button>
+          </div>
+        </div>
+      }
+
+      <div class="actions">
+        <button type="submit" class="button-primary">
+          {{ isEditingStatement() ? 'Save statement' : 'Add statement' }}
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <section class="panel-card panel-span">
+    <div class="section-head">
+      <h2>Statements</h2>
+    </div>
+
+    <div class="simple-list">
+      @if (statements().length) {
+        @for (statement of statements(); track statement.id) {
+          <article class="simple-item">
+            <div>
+              <strong>{{ statement.title }}</strong>
+              <p>{{ categoryName()(statement) }} · {{ statementSummary()(statement) }}</p>
+            </div>
+
+            <div class="actions">
+              <button type="button" class="button-ghost" (click)="editStatement.emit(statement)">Edit</button>
+              <button type="button" class="button-ghost danger" (click)="deleteStatement.emit(statement)">Delete</button>
+            </div>
+          </article>
+        }
+      } @else {
+        <p class="empty-text">No statements yet.</p>
+      }
+    </div>
+  </section>
+</section>

@@ -1,0 +1,97 @@
+@mixin shell-panel {
+  border: 1px solid var(--line-shell-soft);
+  border-radius: 1.3rem;
+  background: var(--surface-shell-1);
+  box-shadow: var(--shadow-shell-1);
+}
+
+@mixin stage-panel {
+  border: 1px solid var(--line-stage-soft);
+  border-radius: 1.3rem;
+  background: var(--surface-stage-0);
+  box-shadow: var(--shadow-stage-1);
+}
+
+@mixin control-base($line: var(--line-shell-soft), $radius: 0.95rem) {
+  border: 1px solid $line;
+  border-radius: $radius;
+  font: inherit;
+  transition: border-color 170ms ease, background 170ms ease, color 170ms ease, transform 170ms ease;
+}
+
+@mixin shell-field {
+  @include control-base(var(--line-shell-soft));
+  background: var(--surface-shell-2);
+  color: var(--ink-on-rail);
+  padding: 0.62rem 0.76rem;
+}
+
+@mixin stage-field {
+  @include control-base(var(--line-stage-soft));
+  background: color-mix(in oklab, var(--surface-stage-0) 90%, white);
+  color: var(--ink-stage-1);
+  padding: 0.62rem 0.76rem;
+}
+
+@mixin button-shell {
+  @include control-base(var(--line-shell-soft));
+  background: var(--surface-shell-2);
+  color: var(--ink-on-rail);
+  min-height: 2.35rem;
+  padding: 0.58rem 0.88rem;
+  font-size: 0.84rem;
+  font-weight: 620;
+  cursor: pointer;
+}
+
+@mixin button-shell-primary {
+  @include control-base(color-mix(in oklab, var(--oxide-strong) 56%, #120d09));
+  background: linear-gradient(145deg, var(--oxide-warm), var(--oxide-strong));
+  color: #151211;
+  min-height: 2.35rem;
+  padding: 0.58rem 0.92rem;
+  font-size: 0.84rem;
+  font-weight: 730;
+  cursor: pointer;
+}
+
+@mixin button-stage {
+  @include control-base(var(--line-stage-soft));
+  background: var(--surface-stage-1);
+  color: var(--ink-stage-2);
+  min-height: 2.35rem;
+  padding: 0.58rem 0.88rem;
+  font-size: 0.84rem;
+  font-weight: 620;
+  cursor: pointer;
+}
+
+@mixin overlay-backdrop($z: 30) {
+  position: fixed;
+  inset: 0;
+  z-index: $z;
+  background:
+    radial-gradient(circle at 16% 12%, rgba(170, 104, 74, 0.2), transparent 36%),
+    radial-gradient(circle at 84% 82%, rgba(16, 12, 11, 0.58), transparent 38%),
+    rgba(6, 5, 5, 0.66);
+  backdrop-filter: blur(9px);
+  display: grid;
+  place-items: center;
+  padding: 1.1rem;
+}
+
+@mixin overlay-card($w: 640px) {
+  width: min($w, 100%);
+  border-radius: 1.5rem;
+  border: 1px solid var(--line-shell-strong);
+  background:
+    linear-gradient(
+      150deg,
+      color-mix(in oklab, var(--surface-shell-1) 84%, #231712),
+      color-mix(in oklab, var(--surface-shell-2) 88%, #0f0d0c)
+    );
+  box-shadow: var(--shadow-shell-2);
+  padding: 1.2rem;
+  display: grid;
+  gap: 1rem;
+}

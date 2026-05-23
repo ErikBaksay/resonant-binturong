@@ -1,0 +1,50 @@
+<section class="overlay" role="dialog" aria-modal="true" aria-label="Private session">
+  <div class="overlay-card">
+    <p class="kicker">Private session</p>
+    <h2>Not saved anywhere</h2>
+    <p class="subtle">This session is temporary only. It will vanish after completion or if you discard it.</p>
+
+    <div class="quote-box">
+      <p>{{ session().text }}</p>
+    </div>
+
+    <div class="progress-grid">
+      <div>
+        <span class="label">Progress</span>
+        <strong>{{ session().completedRepetitions }}/{{ session().targetRepetitions }}</strong>
+      </div>
+      <div>
+        <span class="label">Remaining</span>
+        <strong>{{ session().targetRepetitions - session().completedRepetitions }}</strong>
+      </div>
+    </div>
+
+    <form class="form-stack" (ngSubmit)="submit.emit()">
+      <label>
+        <span>Write the statement</span>
+        <textarea
+          name="private-entry"
+          [ngModel]="session().currentEntry"
+          (ngModelChange)="updateEntry.emit($event)"
+          rows="4"
+          placeholder="Type the line here"
+          required
+        ></textarea>
+      </label>
+
+      <p class="subtle">
+        Case, punctuation, extra spaces, and a small number of typos are allowed. If you pause after typing a matching entry,
+        it counts automatically.
+      </p>
+
+      @if (feedback()) {
+        <p class="feedback">{{ feedback() }}</p>
+      }
+
+      <div class="actions">
+        <button type="submit" class="button-primary full-width">Count repetition</button>
+        <button type="button" class="button-ghost full-width" (click)="discard.emit()">Discard forever</button>
+      </div>
+    </form>
+  </div>
+</section>

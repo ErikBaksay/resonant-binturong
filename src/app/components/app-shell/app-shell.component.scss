@@ -1,0 +1,159 @@
+@use '../../../styles/primitives' as p;
+
+:host {
+  display: block;
+  min-height: 100dvh;
+}
+
+.app-root {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: 0.92rem;
+  padding: clamp(0.82rem, 1.8vw, 1.35rem);
+  color: var(--ink-shell);
+}
+
+.top-strip {
+  @include p.shell-panel;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.88rem 1rem;
+  backdrop-filter: blur(18px);
+}
+
+.brand-block {
+  min-width: 0;
+
+  .eyebrow {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--ink-faint);
+    font-size: 0.61rem;
+    font-weight: 710;
+  }
+
+  h1 {
+    margin: 0.24rem 0 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 3vw, 2.35rem);
+    line-height: 0.96;
+    font-weight: 520;
+    letter-spacing: 0.01em;
+    color: var(--ink-on-rail);
+  }
+
+  .subtitle {
+    margin: 0.32rem 0 0;
+    color: var(--ink-faint);
+    font-size: 0.82rem;
+    letter-spacing: 0.03em;
+  }
+}
+
+.strip-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.52rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.hero-action {
+  @include p.button-shell-primary;
+  min-height: 2.48rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.62rem 0.96rem;
+}
+
+.hero-action:hover {
+  transform: translateY(-1px);
+}
+
+.view-switch {
+  @include p.control-base(var(--line-shell-soft));
+  background: var(--surface-shell-2);
+  display: inline-flex;
+  padding: 0.2rem;
+  gap: 0.2rem;
+}
+
+.switch {
+  border: 1px solid transparent;
+  border-radius: 0.78rem;
+  background: transparent;
+  color: var(--ink-faint);
+  font: inherit;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  min-height: 2.28rem;
+  padding: 0.5rem 0.84rem;
+  cursor: pointer;
+  transition: border-color 170ms ease, color 170ms ease, background 170ms ease;
+}
+
+.switch.active {
+  border-color: color-mix(in oklab, var(--oxide-strong) 56%, var(--line-shell-strong));
+  background: color-mix(in oklab, var(--surface-shell-1) 86%, #1a1310);
+  color: var(--ink-on-rail);
+}
+
+.notice {
+  @include p.shell-panel;
+  border-color: color-mix(in oklab, #cf775f 44%, var(--line-shell-soft));
+  background: color-mix(in oklab, #cf775f 16%, var(--surface-shell-1));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.9rem;
+  padding: 0.68rem 0.82rem;
+
+  p {
+    margin: 0;
+    font-size: 0.83rem;
+    color: var(--ink-faint);
+  }
+
+  button {
+    @include p.button-shell;
+    background: transparent;
+    color: var(--ink-on-rail);
+    font-size: 0.8rem;
+  }
+}
+
+.workspace {
+  min-height: 0;
+}
+
+@media (max-width: 980px) {
+  .top-strip {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .strip-actions {
+    justify-content: stretch;
+    width: 100%;
+  }
+
+  .view-switch {
+    width: 100%;
+    display: flex;
+  }
+
+  .switch {
+    flex: 1;
+    text-align: center;
+  }
+
+  .hero-action {
+    width: 100%;
+  }
+}
